@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://samuelglist.github.io/pavel-filatov/sitemap.xml

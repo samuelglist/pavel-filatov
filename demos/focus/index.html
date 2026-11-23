@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Focus Board — личный таск-борд</title>
+  <meta name="description" content="Focus Board — минималистичный таск-борд для учебных и личных задач.">
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+  <style>
+    :root{--bg:#0b0d12;--panel:#12161f;--card:#191f2b;--card2:#202736;--text:#eef1f8;--muted:#8b93a7;--line:rgba(238,241,248,.09);--lime:#c7ff4d;--violet:#a78bfa;--orange:#ff8a5c;--blue:#6ea8ff}
+    *{box-sizing:border-box}html,body{margin:0;height:100%}
+    body{background:var(--bg);color:var(--text);font-family:"Manrope Variable","Segoe UI",sans-serif;font-size:14px;line-height:1.5;display:flex;overflow:hidden}
+    a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;cursor:pointer}
+    .sidebar{width:82px;flex:0 0 auto;border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding:22px 0;gap:12px}
+    .logo{width:44px;height:44px;border-radius:13px;background:var(--lime);color:#0b0d12;display:grid;place-items:center;font-family:"Unbounded Variable",sans-serif;font-size:20px;font-weight:800;margin-bottom:18px}
+    .icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--muted);transition:.2s}
+    .icon:hover,.icon.active{background:var(--card);color:var(--text)}
+    .icon.active{box-shadow:inset 0 0 0 1px var(--line)}
+    .sidebar .bottom{margin-top:auto;display:grid;gap:10px;place-items:center}
+    .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--blue));display:grid;place-items:center;font-size:11px;font-weight:800;color:#0b0d12}
+    main{flex:1;min-width:0;padding:26px 34px 24px;display:flex;flex-direction:column;gap:20px;overflow:auto}
+    .topbar{display:flex;align-items:flex-end;gap:24px}
+    .date{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+    h1{font-family:"Unbounded Variable",sans-serif;font-size:clamp(26px,2.6vw,38px);font-weight:650;letter-spacing:-.04em;line-height:1;margin:0}
+    .search{margin-left:auto;display:flex;align-items:center;gap:10px;width:260px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;color:var(--muted);font-size:12px}
+    .search svg{flex:0 0 auto}
+    .add{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:#0b0d12;border:0;border-radius:12px;padding:12px 17px;font-size:11px;font-weight:850;letter-spacing:.05em;text-transform:uppercase}
+    .add:hover{filter:brightness(1.06)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 17px;display:flex;align-items:center;gap:14px}
+    .stat strong{display:block;font-family:"Unbounded Variable",sans-serif;font-size:22px;font-weight:600;line-height:1;letter-spacing:-.04em}
+    .stat span{display:block;margin-top:5px;font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+    .ring{width:38px;height:38px;border-radius:50%;background:conic-gradient(var(--lime) 0 68%,#2a3140 68% 100%);display:grid;place-items:center;flex:0 0 auto}
+    .ring::after{content:"";width:27px;height:27px;border-radius:50%;background:var(--panel)}
+    .mini-bars{display:flex;align-items:flex-end;gap:3px;height:30px;margin-left:auto}
+    .mini-bars i{display:block;width:5px;border-radius:2px;background:var(--violet);opacity:.8}
+    .board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;flex:1;min-height:0}
+    .column{background:rgba(18,22,31,.65);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;min-height:0}
+    .col-head{display:flex;align-items:center;gap:8px;padding:2px 4px 12px}
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+    .col-head h2{margin:0;font-size:11px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .count{margin-left:auto;font-size:10px;font-weight:800;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+    .cards{display:grid;gap:9px;overflow:auto;padding-bottom:4px}
+    .task{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 13px 12px;transition:.2s}
+    .task:hover{border-color:rgba(199,255,77,.35);transform:translateY(-1px)}
+    .task.done{opacity:.55}
+    .task.done .task-title{text-decoration:line-through}
+    .task-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .tag{font-size:8px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:999px;background:rgba(167,139,250,.13);color:#c4b5fd}
+    .tag.lime{background:rgba(199,255,77,.12);color:var(--lime)}
+    .tag.orange{background:rgba(255,138,92,.12);color:var(--orange)}
+    .tag.blue{background:rgba(110,168,255,.12);color:var(--blue)}
+    .check{width:18px;height:18px;border-radius:6px;border:1px solid rgba(238,241,248,.24);background:transparent;display:grid;place-items:center;font-size:10px;color:#0b0d12;flex:0 0 auto}
+    .check.on{background:var(--lime);border-color:var(--lime)}
+    .task-title{margin:9px 0 0;font-size:12.5px;font-weight:700;line-height:1.4}
+    .task-meta{display:flex;align-items:center;gap:8px;margin-top:10px;color:var(--muted);font-size:9.5px;font-weight:600}
+    .bar{height:3px;border-radius:3px;background:#2a3140;margin-top:10px;overflow:hidden}
+    .bar i{display:block;height:100%;border-radius:3px;background:var(--violet)}
+    .bar i.lime{background:var(--lime)}.bar i.orange{background:var(--orange)}
+    .people{display:flex;margin-left:auto}
+    .people span{width:18px;height:18px;border-radius:50%;border:2px solid var(--card);margin-left:-5px;background:var(--blue);font-size:7px;font-weight:800;display:grid;place-items:center;color:#0b0d12}
+    .people span:nth-child(2){background:var(--orange)}
+    .people span:nth-child(3){background:var(--lime)}
+    .empty{border:1px dashed rgba(238,241,248,.18);border-radius:12px;padding:14px;text-align:center;color:var(--muted);font-size:10.5px}
+    .back{position:fixed;left:96px;bottom:12px;z-index:100;background:var(--card);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:7px 12px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    .back:hover{color:var(--text);border-color:var(--lime)}
+    @media(max-width:900px){body{overflow:auto}.sidebar{display:none}main{padding:18px}.topbar{flex-wrap:wrap}.search{order:3;width:100%;margin-left:0}.stats{grid-template-columns:repeat(2,1fr)}.board{grid-template-columns:1fr}.back{display:none}}
+  </style>
+</head>
+<body>
+  <aside class="sidebar" aria-label="Боковое меню">
+    <div class="logo">F.</div>
+    <a class="icon active" href="#" aria-label="Доска">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
+    </a>
+    <a class="icon" href="#" aria-label="Календарь">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+    </a>
+    <a class="icon" href="#" aria-label="Аналитика">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>
+    </a>
+    <a class="icon" href="#" aria-label="Настройки">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.63 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.63h.01A1.7 1.7 0 0 0 10.04 3.07V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.37 9v.01a1.7 1.7 0 0 0 1.56 1.03H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51.96Z"/></svg>
+    </a>
+    <div class="bottom"><div class="avatar">ПФ</div></div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><p class="date">Пятница, 21 ноября</p><h1>Мои задачи</h1></div>
+      <div class="search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg> Поиск по задачам…</div>
+      <button class="add" type="button" id="add-task">＋ Новая задача</button>
+    </header>
+
+    <section class="stats" aria-label="Краткая статистика">
+      <div class="stat"><div><strong id="total-count">9</strong><span>всего задач</span></div><div class="mini-bars"><i style="height:40%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:90%"></i><i style="height:65%"></i></div></div>
+      <div class="stat"><div><strong>5</strong><span>в работе</span></div><div class="mini-bars"><i style="height:65%;background:var(--orange)"></i><i style="height:45%;background:var(--orange)"></i><i style="height:80%;background:var(--orange)"></i><i style="height:35%;background:var(--orange)"></i></div></div>
+      <div class="stat"><div><strong>3</strong><span>готово</span></div><div class="mini-bars"><i style="height:50%;background:var(--lime)"></i><i style="height:75%;background:var(--lime)"></i><i style="height:60%;background:var(--lime)"></i></div></div>
+      <div class="stat"><div class="ring" aria-hidden="true"></div><div><strong>68%</strong><span>неделя закрыта</span></div></div>
+    </section>
+
+    <section class="board" aria-label="Доска задач">
+      <div class="column">
+        <div class="col-head"><span class="dot" style="background:var(--muted)"></span><h2>Бэклог</h2><span class="count">4</span></div>
+        <div class="cards" id="backlog">
+          <article class="task"><div class="task-top"><span class="tag blue">учёба</span><button class="check" type="button" aria-label="Отметить выполненной"></button></div><p class="task-title">Собрать отчёт по практике и проверить оформление по ГОСТ</p><div class="task-meta"><span>28 ноя</span><div class="people"><span>ПФ</span></div></div><div class="bar"><i style="width:20%"></i></div></article>
+          <article class="task"><div class="task-top"><span class="tag lime">сайт</span><button class="check" type="button" aria-label="Отметить выполненной"></button></div><p class="task-title">Добавить в портфолио кейс кофейни «Восход»</p><div class="task-meta"><span>26 ноя</span><div class="people"><span>ПФ</span></div></div><div class="bar"><i class="lime" style="width:45%"></i></div></article>
+          <article class="task"><div class="task-top"><span class="tag orange">дизайн</span><button class="check" type="button" aria-label="Отметить выполненной"></button></div><p class="task-title">Собрать мудборд для страницы контактов</p><div class="task-meta"><span>30 ноя</span><div class="people"><span>ПФ</span></div></div><div class="bar"><i class="orange" style="width:10%"></i></div></article>
+          <div class="empty">＋ Перетащите задачу сюда</div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="col-head"><span class="dot" style="background:var(--violet)"></span><h2>В работе</h2><span class="count">3</span></div>
+        <div class="cards">
+          <article class="task"><div class="task-top"><span class="tag lime">сайт</span><button class="check" type="button" aria-label="Отметить выполненной"></button></div><p class="task-title">Финальная проверка адаптивности на 360, 768 и 1440 px</p><div class="task-meta"><span>сегодня</span><div class="people"><span>ПФ</span><span>АК</span></div></div><div class="bar"><i style="width:72%"></i></div></article>
+          <article class="task"><div class="task-top"><span class="tag">код</span><button class="check" type="button" aria-label="Отметить выполненной"></button></div><p class="task-title">Отрефакторить валидацию формы: единые сообщения об ошибках</p><div class="task-meta"><span>24 ноя</span><div class="people"><span>ПФ</span></div></div><div class="bar"><i style="width:60%"></i></div></article>
+          <article class="task"><div class="task-top"><span class="tag blue">учёба</span><button class="check" type="button" aria-label="Отметить выполненной"></button></div><p class="task-title">Подготовить вопросы к защите практической работы</p><div class="task-meta"><span>25 ноя</span><div class="people"><span>ПФ</span></div></div><div class="bar"><i style="width:35%"></i></div></article>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="col-head"><span class="dot" style="background:var(--lime)"></span><h2>Готово</h2><span class="count">3</span></div>
+        <div class="cards">
+          <article class="task done"><div class="task-top"><span class="tag lime">сайт</span><button class="check on" type="button" aria-label="Вернуть в работу">✓</button></div><p class="task-title">Сверстать главный экран и меню с плавной прокруткой</p><div class="task-meta"><span>18 ноя</span><div class="people"><span>ПФ</span></div></div></article>
+          <article class="task done"><div class="task-top"><span class="tag orange">дизайн</span><button class="check on" type="button" aria-label="Вернуть в работу">✓</button></div><p class="task-title">Утвердить палитру и типографику проекта</p><div class="task-meta"><span>16 ноя</span><div class="people"><span>ПФ</span></div></div></article>
+          <article class="task done"><div class="task-top"><span class="tag blue">учёба</span><button class="check on" type="button" aria-label="Вернуть в работу">✓</button></div><p class="task-title">Сдать макет отчёта руководителю</p><div class="task-meta"><span>14 ноя</span><div class="people"><span>ПФ</span></div></div></article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('.check');
+      if (!button) return;
+      const task = button.closest('.task');
+      const isDone = task.classList.toggle('done');
+      button.classList.toggle('on', isDone);
+      button.textContent = isDone ? '✓' : '';
+      button.setAttribute('aria-label', isDone ? 'Вернуть в работу' : 'Отметить выполненной');
+      updateTotal();
+    });
+    function updateTotal() {
+      const total = document.querySelectorAll('.task').length;
+      document.getElementById('total-count').textContent = total;
+    }
+    document.getElementById('add-task').addEventListener('click', () => {
+      const title = prompt('Название задачи:');
+      if (!title || !title.trim()) return;
+      const article = document.createElement('article');
+      article.className = 'task';
+      article.innerHTML = '<div class="task-top"><span class="tag lime">новая</span><button class="check" type="button" aria-label="Отметить выполненной"></button></div><p class="task-title"></p><div class="task-meta"><span>сегодня</span><div class="people"><span>ПФ</span></div></div>';
+      article.querySelector('.task-title').textContent = title.trim();
+      document.getElementById('backlog').prepend(article);
+      updateTotal();
+    });
+  </script>
+</body>
+</html>

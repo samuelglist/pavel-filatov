@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Павел Филатов — веб-разработчик и студент ГУАП</title>
+  <meta name="description" content="Портфолио Павла Филатова: адаптивные сайты, интерфейсы и небольшие веб-инструменты. Ручная вёрстка на HTML, CSS и JavaScript.">
+  <meta name="theme-color" content="#0b0d10">
+  <meta property="og:title" content="Павел Филатов — веб-разработчик">
+  <meta property="og:description" content="Сайты, в которых есть характер. Портфолио студента ГУАП: HTML, CSS, JavaScript.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/unbounded-unbounded-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/manrope-manrope-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/fonts/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержанию</a>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a class="logo" href="#home" aria-label="Павел Филатов — на главную">
+        <svg class="logo-mark" viewBox="0 0 48 48" width="44" height="44" aria-hidden="true">
+          <rect x="1" y="1" width="46" height="46" rx="13" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path fill-rule="evenodd" d="M18 34V14h8c5 0 8.2 2.7 8.2 7.2s-3.2 7.3-8.2 7.3h-4V34h-4Zm4-9.2h4c2.7 0 4.2-1.2 4.2-3.3s-1.5-3.3-4.2-3.3h-4v6.6Z" fill="currentColor"/>
+          <circle cx="36.5" cy="11.5" r="4.5" fill="#ff5a1f"/>
+        </svg>
+        <span class="logo-text">П. Филатов<small>web developer</small></span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Открыть меню">
+        <span></span><span></span>
+      </button>
+
+      <nav class="nav" id="primary-nav" aria-label="Основная навигация">
+        <a href="#home" class="nav-link is-active">Главная</a>
+        <a href="#about" class="nav-link">Обо мне</a>
+        <a href="#work" class="nav-link">Проекты</a>
+        <a href="#contact" class="nav-link">Контакты</a>
+      </nav>
+
+      <a class="header-cta" href="#contact">Обсудить проект <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> Санкт-Петербург · портфолио 2026</p>
+          <h1 id="hero-title">Сайты,<br>в которых есть<br><span class="accent-word">характер<svg class="scribble" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M4 17c46-9 92-12 142-9 43 2 79 8 150 4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg></span></h1>
+          <p class="lead">Меня зовут Павел. Я студент ГУАП и веб-разработчик: собираю адаптивные сайты, продумываю интерфейсы и довожу макеты до рабочего кода — без конструкторов и шаблонных блоков.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#work">Смотреть проекты <span aria-hidden="true">↘</span></a>
+            <a class="btn btn-ghost" href="#about">Обо мне</a>
+          </div>
+          <dl class="hero-stats">
+            <div><dt>4</dt><dd>проекта<br>в портфолио</dd></div>
+            <div><dt>360–1440</dt><dd>пикселей —<br>проверенный диапазон</dd></div>
+            <div><dt>100%</dt><dd>ручная<br>вёрстка</dd></div>
+          </dl>
+        </div>
+
+        <div class="hero-visual" aria-label="Фрагмент авторского проекта">
+          <div class="portrait-card">
+            <div class="portrait-frame">
+              <picture>
+                <source type="image/webp" srcset="assets/img/author-work-800.webp 800w, assets/img/author-work-1200.webp 1200w" sizes="(max-width: 900px) 88vw, 540px">
+                <img src="assets/img/author-work-1200.jpg" width="1200" height="900" alt="Скриншот авторского сайта-портфолио в окне браузера" fetchpriority="high">
+              </picture>
+            </div>
+            <div class="portrait-meta">
+              <span>Авторский проект</span>
+              <span>2026</span>
+            </div>
+          </div>
+
+          <div class="floating-note note-one" aria-hidden="true">
+            <span class="note-dot"></span> HTML · CSS · JS
+          </div>
+          <div class="floating-note note-two" aria-hidden="true">
+            <span class="note-code">&lt;/&gt;</span> без фреймворков
+          </div>
+
+          <div class="sticker" aria-hidden="true">
+            <svg viewBox="0 0 160 160" width="160" height="160">
+              <defs><path id="circlePath" d="M80,80 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0"/></defs>
+              <circle cx="80" cy="80" r="78" fill="#ff5a1f"/>
+              <text class="sticker-text"><textPath href="#circlePath" startOffset="0">ОТКРЫТ К ПРОЕКТАМ · 2026 · </textPath></text>
+              <path d="M58 82h44M80 60v44" stroke="#0b0d10" stroke-width="7" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true"><span></span> листайте</div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>HTML5</span><span>CSS3</span><span>JAVASCRIPT</span><span>АДАПТИВНОСТЬ</span><span>ДОСТУПНОСТЬ</span><span>ТИПОГРАФИКА</span><span>PYTHON</span><span>GIT</span>
+        <span>HTML5</span><span>CSS3</span><span>JAVASCRIPT</span><span>АДАПТИВНОСТЬ</span><span>ДОСТУПНОСТЬ</span><span>ТИПОГРАФИКА</span><span>PYTHON</span><span>GIT</span>
+      </div>
+    </div>
+
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-num">01</span>
+          <h2 id="about-title">Обо мне</h2>
+          <p class="section-lead">Немного о том, как я работаю и почему мне нравится веб.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-copy reveal">
+            <p class="about-big">Я учусь в Санкт-Петербургском государственном университете аэрокосмического приборостроения на кафедре вычислительных систем и сетей. Мне нравится, когда интерфейс не просто выглядит аккуратно, а помогает человеку быстрее решить задачу: найти нужное, оставить заявку, разобраться в данных.</p>
+            <p>Этот сайт я собрал вручную — от структуры и текста до сетки, анимаций и проверки формы. В работе опираюсь на семантический HTML, современный CSS и небольшой vanilla JavaScript: без тяжёлых фреймворков, чтобы страница оставалась быстрой и понятной.</p>
+            <p>Веду проект от эскиза до публикации: разбираю задачу, собираю прототип, проверяю адаптивность и доступность, оптимизирую изображения и шрифты. Люблю аккуратную типографику, честные тексты и детали, которые замечаешь не сразу.</p>
+
+            <blockquote class="pull-quote">
+              <svg viewBox="0 0 48 48" width="38" height="38" aria-hidden="true"><path d="M20 10c-7 4-11 10-11 18v10h12V26h-7c0-6 2-9 8-12l-2-4Zm20 0c-7 4-11 10-11 18v10h12V26h-7c0-6 2-9 8-12l-2-4Z" fill="currentColor"/></svg>
+              <p>Хороший сайт — это не набор блоков, а продуманный маршрут пользователя.</p>
+            </blockquote>
+          </div>
+
+          <aside class="about-aside reveal">
+            <div class="aside-card">
+              <h3>Что я делаю</h3>
+              <ul class="service-list">
+                <li><span>01</span><div><strong>Лендинги</strong><p>Структура, тексты, адаптив, форма заявки.</p></div></li>
+                <li><span>02</span><div><strong>Интерфейсы</strong><p>Прототипы, дизайн-система, аккуратная вёрстка.</p></div></li>
+                <li><span>03</span><div><strong>Автоматизация</strong><p>Python-скрипты, обработка данных, небольшие инструменты.</p></div></li>
+              </ul>
+            </div>
+
+            <div class="aside-card skills-card">
+              <h3>Инструменты</h3>
+              <ul class="chips" aria-label="Навыки и инструменты">
+                <li>HTML5</li><li>CSS3</li><li>Grid / Flex</li><li>JavaScript</li><li>Python</li><li>Figma</li><li>Git</li><li>Доступность</li><li>SEO-основа</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section work" id="work" aria-labelledby="work-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-num">02</span>
+          <h2 id="work-title">Проекты</h2>
+          <p class="section-lead">Четыре работы, в которых я отвечал за структуру, дизайн и код.</p>
+        </div>
+
+        <div class="gallery">
+          <article class="project reveal">
+            <button class="project-media" type="button" data-full="assets/img/gallery-portfolio-1200.jpg" aria-label="Открыть увеличенное изображение проекта «Сайт-портфолио»">
+              <picture>
+                <source type="image/webp" srcset="assets/img/gallery-portfolio-600.webp 600w, assets/img/gallery-portfolio-1200.webp 1200w" sizes="(max-width: 820px) 92vw, 46vw">
+                <img src="assets/img/gallery-portfolio-1200.jpg" width="1200" height="800" alt="Главная страница сайта-портфолио с крупным заголовком и карточкой проекта" loading="lazy">
+              </picture>
+              <span class="project-zoom" aria-hidden="true">＋</span>
+            </button>
+            <div class="project-body">
+              <div class="project-top"><span class="tag">HTML · CSS · JS</span><span class="project-year">2026</span></div>
+              <h3>Сайт-портфолио</h3>
+              <p>Личный сайт, который вы сейчас смотрите: тёмная редакционная сетка, четыре раздела, галерея и форма с валидацией.</p>
+              <a class="project-link" href="#home">Этот сайт <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+
+          <article class="project reveal">
+            <button class="project-media" type="button" data-full="assets/img/gallery-coffee-1200.jpg" aria-label="Открыть увеличенное изображение проекта «Кофейня Восход»">
+              <picture>
+                <source type="image/webp" srcset="assets/img/gallery-coffee-600.webp 600w, assets/img/gallery-coffee-1200.webp 1200w" sizes="(max-width: 820px) 92vw, 46vw">
+                <img src="assets/img/gallery-coffee-1200.jpg" width="1200" height="800" alt="Лендинг кофейни «Восход» с тёплой палитрой и меню" loading="lazy">
+              </picture>
+              <span class="project-zoom" aria-hidden="true">＋</span>
+            </button>
+            <div class="project-body">
+              <div class="project-top"><span class="tag">Лендинг · UX</span><span class="project-year">2026</span></div>
+              <h3>Кофейня «Восход»</h3>
+              <p>Лендинг локального бизнеса: тёплая палитра, меню, часы работы и понятный путь к брони столика.</p>
+              <a class="project-link" href="demos/coffee/" target="_blank" rel="noopener">Открыть проект <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+
+          <article class="project reveal">
+            <button class="project-media" type="button" data-full="assets/img/gallery-focus-1200.jpg" aria-label="Открыть увеличенное изображение проекта Focus Board">
+              <picture>
+                <source type="image/webp" srcset="assets/img/gallery-focus-600.webp 600w, assets/img/gallery-focus-1200.webp 1200w" sizes="(max-width: 820px) 92vw, 46vw">
+                <img src="assets/img/gallery-focus-1200.jpg" width="1200" height="800" alt="Тёмный интерфейс таск-борда Focus с тремя колонками задач" loading="lazy">
+              </picture>
+              <span class="project-zoom" aria-hidden="true">＋</span>
+            </button>
+            <div class="project-body">
+              <div class="project-top"><span class="tag">JavaScript · UI</span><span class="project-year">2025</span></div>
+              <h3>Focus Board</h3>
+              <p>Минималистичный таск-борд: три колонки, фильтры и аккуратные состояния карточек.</p>
+              <a class="project-link" href="demos/focus/" target="_blank" rel="noopener">Открыть проект <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+
+          <article class="project reveal">
+            <button class="project-media" type="button" data-full="assets/img/gallery-audit-1200.jpg" aria-label="Открыть увеличенное изображение проекта «UX-аудит личного кабинета»">
+              <picture>
+                <source type="image/webp" srcset="assets/img/gallery-audit-600.webp 600w, assets/img/gallery-audit-1200.webp 1200w" sizes="(max-width: 820px) 92vw, 46vw">
+                <img src="assets/img/gallery-audit-1200.jpg" width="1200" height="800" alt="Дашборд UX-аудита личного кабинета ГУАП с метриками и графиками" loading="lazy">
+              </picture>
+              <span class="project-zoom" aria-hidden="true">＋</span>
+            </button>
+            <div class="project-body">
+              <div class="project-top"><span class="tag">Research · Dashboard</span><span class="project-year">2025</span></div>
+              <h3>UX-аудит ЛК ГУАП</h3>
+              <p>Аналитический дашборд по эвристической оценке личного кабинета: метрики, проблемные сценарии и рекомендации.</p>
+              <a class="project-link" href="demos/audit/" target="_blank" rel="noopener">Открыть проект <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        </div>
+
+        <div class="work-note reveal">
+          <p><strong>Хотите так же?</strong> Соберу сайт под задачу: от одного экрана до многостраничного проекта.</p>
+          <a class="btn btn-primary" href="#contact">Обсудить задачу <span aria-hidden="true">↘</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-grid">
+        <div class="contact-info reveal">
+          <span class="section-num">03</span>
+          <h2 id="contact-title">Давайте сделаем<br>что-то понятное</h2>
+          <p class="contact-lead">Расскажите о задаче: что нужно сделать, для кого и в какие сроки. Отвечу в течение дня.</p>
+
+          <ul class="contact-list">
+            <li>
+              <span class="contact-label">Телефон</span>
+              <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+            </li>
+            <li>
+              <span class="contact-label">Почта</span>
+              <a href="mailto:pavel.filatov@mail.ru">pavel.filatov@mail.ru</a>
+            </li>
+            <li>
+              <span class="contact-label">Телеграм</span>
+              <a href="https://t.me/pavel_filatov" target="_blank" rel="noopener">@pavel_filatov</a>
+            </li>
+          </ul>
+
+          <div class="socials" aria-label="Социальные сети">
+            <a class="social" href="https://github.com/samuelglist" target="_blank" rel="noopener" aria-label="Профиль на GitHub">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2.17c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12A11.5 11.5 0 0 0 12 .5Z"/></svg>
+            </a>
+            <a class="social" href="https://t.me/pavel_filatov" target="_blank" rel="noopener" aria-label="Телеграм">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19c-.24 1.07-.87 1.33-1.76.83l-4.87-3.59-2.35 2.26c-.26.26-.48.48-.98.48l.35-4.96 9.02-8.15c.39-.35-.09-.54-.61-.19L6.36 12.9 1.5 11.38c-1.06-.33-1.08-1.06.22-1.57L20.5 2.75c.88-.33 1.65.2 1.4 1.55Z"/></svg>
+            </a>
+            <a class="social" href="https://vk.com/pavel_filatov" target="_blank" rel="noopener" aria-label="ВКонтакте">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12.8 18.6c-6.1 0-9.6-4.2-9.7-11.1h3c.1 5.1 2.3 7.2 4.1 7.7V7.5h2.9v4.4c1.7-.2 3.5-2.1 4.1-4.4h2.9a8.2 8.2 0 0 1-3.8 5.4 8.4 8.4 0 0 1 4.4 5.7h-3.2c-.6-2.1-2.2-3.7-4.4-3.9v3.9h-.3Z"/></svg>
+            </a>
+            <a class="social" href="mailto:pavel.filatov@mail.ru" aria-label="Написать на почту">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M3 5.5h18v13H3z"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="m3.5 6 8.5 7 8.5-7"/></svg>
+            </a>
+          </div>
+
+          <div class="qr-card">
+            <div class="qr-copy">
+              <span class="contact-label">Быстрый переход</span>
+              <p>Наведите камеру телефона на QR-код, чтобы открыть сайт.</p>
+            </div>
+            <a href="https://samuelglist.github.io/pavel-filatov/" target="_blank" rel="noopener" class="qr-link">
+              <img src="assets/img/qr.svg" width="132" height="132" alt="QR-код со ссылкой на сайт-портфолио">
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contact-form" novalidate>
+          <div class="form-head">
+            <h3>Оставить сообщение</h3>
+            <p>Поля со звёздочкой обязательны.</p>
+          </div>
+
+          <div class="field">
+            <label for="name">Имя <span aria-hidden="true">*</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться" required aria-describedby="name-error">
+            <p class="error" id="name-error" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="email">Email <span aria-hidden="true">*</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.ru" required aria-describedby="email-error">
+            <p class="error" id="email-error" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="message">Сообщение <span aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" rows="5" placeholder="Коротко о задаче, сроках и пожеланиях" required aria-describedby="message-error"></textarea>
+            <p class="error" id="message-error" aria-live="polite"></p>
+          </div>
+
+          <button class="btn btn-submit" type="submit">Отправить сообщение <span aria-hidden="true">↗</span></button>
+          <p class="form-note">Демонстрационная форма: данные проверяются в браузере и не отправляются на сервер.</p>
+          <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="logo" href="#home" aria-label="Павел Филатов — наверх">
+          <svg class="logo-mark" viewBox="0 0 48 48" width="44" height="44" aria-hidden="true">
+            <rect x="1" y="1" width="46" height="46" rx="13" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path fill-rule="evenodd" d="M18 34V14h8c5 0 8.2 2.7 8.2 7.2s-3.2 7.3-8.2 7.3h-4V34h-4Zm4-9.2h4c2.7 0 4.2-1.2 4.2-3.3s-1.5-3.3-4.2-3.3h-4v6.6Z" fill="currentColor"/>
+            <circle cx="36.5" cy="11.5" r="4.5" fill="#ff5a1f"/>
+          </svg>
+          <span class="logo-text">П. Филатов<small>web developer</small></span>
+        </a>
+        <p>Адаптивные сайты и интерфейсы<br>Санкт-Петербург, 2026</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Навигация в подвале">
+        <h2>Разделы</h2>
+        <a href="#home">Главная</a>
+        <a href="#about">Обо мне</a>
+        <a href="#work">Проекты</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+
+      <div class="footer-contacts">
+        <h2>Связаться</h2>
+        <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+        <a href="mailto:pavel.filatov@mail.ru">pavel.filatov@mail.ru</a>
+        <a href="https://t.me/pavel_filatov" target="_blank" rel="noopener">Telegram</a>
+      </div>
+
+      <div class="footer-social">
+        <h2>Соцсети</h2>
+        <div class="socials">
+          <a class="social" href="https://github.com/samuelglist" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2.17c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12A11.5 11.5 0 0 0 12 .5Z"/></svg>
+          </a>
+          <a class="social" href="https://t.me/pavel_filatov" target="_blank" rel="noopener" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.7 19c-.24 1.07-.87 1.33-1.76.83l-4.87-3.59-2.35 2.26c-.26.26-.48.48-.98.48l.35-4.96 9.02-8.15c.39-.35-.09-.54-.61-.19L6.36 12.9 1.5 11.38c-1.06-.33-1.08-1.06.22-1.57L20.5 2.75c.88-.33 1.65.2 1.4 1.55Z"/></svg>
+          </a>
+          <a class="social" href="https://vk.com/pavel_filatov" target="_blank" rel="noopener" aria-label="ВКонтакте">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12.8 18.6c-6.1 0-9.6-4.2-9.7-11.1h3c.1 5.1 2.3 7.2 4.1 7.7V7.5h2.9v4.4c1.7-.2 3.5-2.1 4.1-4.4h2.9a8.2 8.2 0 0 1-3.8 5.4 8.4 8.4 0 0 1 4.4 5.7h-3.2c-.6-2.1-2.2-3.7-4.4-3.9v3.9h-.3Z"/></svg>
+          </a>
+        </div>
+        <a class="footer-mail" href="mailto:pavel.filatov@mail.ru">Написать письмо</a>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 П.В. Филатов. Все права защищены.</p>
+      <p>Сайт собран вручную: HTML, CSS, JavaScript.</p>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Просмотр изображения">
+    <button class="lightbox-close" type="button" aria-label="Закрыть">×</button>
+    <img src="" alt="">
+  </dialog>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UX-аудит ЛК ГУАП — аналитический дашборд</title>
+  <meta name="description" content="Дашборд по результатам эвристической оценки личного кабинета ГУАП: метрики, проблемы и рекомендации.">
+  <link rel="stylesheet" href="../../assets/fonts/fonts.css">
+  <style>
+    :root{--bg:#f2f5fb;--card:#fff;--navy:#0d1b3e;--navy2:#17264d;--text:#172033;--muted:#6b7690;--line:#e3e8f2;--blue:#2f6bff;--blue-soft:#e8efff;--green:#0f9d74;--green-soft:#e3f7f0;--orange:#f59e0b;--orange-soft:#fff4dd;--red:#e5484d;--red-soft:#ffe9ea;--violet:#7c5cff}
+    *{box-sizing:border-box}html,body{margin:0;height:100%}
+    body{background:var(--bg);color:var(--text);font-family:"Manrope Variable","Segoe UI",sans-serif;font-size:13px;line-height:1.5;display:flex;overflow:hidden}
+    a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;cursor:pointer}
+    .sidebar{width:232px;flex:0 0 auto;background:var(--navy);color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:4px}
+    .brand{display:flex;align-items:center;gap:11px;padding:0 8px 22px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:16px}
+    .brand-mark{width:38px;height:38px;border-radius:11px;background:var(--blue);display:grid;place-items:center;font-family:"Unbounded Variable",sans-serif;font-size:13px;font-weight:800}
+    .brand b{display:block;font-size:13px;font-weight:800;letter-spacing:.02em}
+    .brand span{display:block;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:2px}
+    .nav-label{padding:0 10px;margin:10px 0 6px;font-size:8px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+    .nav-item{display:flex;align-items:center;gap:11px;padding:10px 11px;border-radius:9px;font-size:12px;font-weight:650;color:rgba(255,255,255,.68);transition:.2s}
+    .nav-item svg{opacity:.8}.nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
+    .nav-item.active{background:var(--blue);color:#fff;box-shadow:0 8px 20px rgba(47,107,255,.3)}
+    .nav-item .badge{margin-left:auto;background:rgba(255,255,255,.16);border-radius:999px;padding:1px 7px;font-size:9px;font-weight:800}
+    .sidebar-footer{margin-top:auto;border-top:1px solid rgba(255,255,255,.1);padding:16px 8px 0;display:flex;align-items:center;gap:10px}
+    .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#6ea8ff,#7c5cff);display:grid;place-items:center;font-size:10px;font-weight:800}
+    .sidebar-footer b{display:block;font-size:11px}.sidebar-footer span{display:block;font-size:9px;color:rgba(255,255,255,.45)}
+    main{flex:1;min-width:0;padding:24px 30px;overflow:auto}
+    .crumbs{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700;color:var(--muted);margin-bottom:14px}
+    .crumbs span{color:#a4adc2}.crumbs b{color:var(--text)}
+    .head{display:flex;align-items:flex-start;gap:20px;margin-bottom:20px}
+    h1{font-family:"Unbounded Variable",sans-serif;font-size:clamp(22px,2.2vw,30px);line-height:1.1;letter-spacing:-.04em;margin:0}
+    .sub{margin:7px 0 0;font-size:11.5px;color:var(--muted)}
+    .status{display:inline-flex;align-items:center;gap:6px;margin-left:10px;padding:4px 9px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:8.5px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;vertical-align:2px}
+    .status::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--green)}
+    .head-actions{margin-left:auto;display:flex;gap:8px}
+    .btn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 13px;font-size:10px;font-weight:800;letter-spacing:.03em;display:inline-flex;align-items:center;gap:7px}
+    .btn:hover{border-color:#c9d3e6}
+    .btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+    .btn.primary:hover{background:#255ce6}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+    .kpi{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px 16px;position:relative;overflow:hidden}
+    .kpi::after{content:"";position:absolute;right:-22px;top:-22px;width:70px;height:70px;border-radius:50%;background:var(--blue-soft)}
+    .kpi:nth-child(2)::after{background:var(--orange-soft)}.kpi:nth-child(3)::after{background:var(--green-soft)}.kpi:nth-child(4)::after{background:var(--red-soft)}
+    .kpi label{display:block;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .kpi strong{display:block;margin-top:8px;font-family:"Unbounded Variable",sans-serif;font-size:27px;font-weight:620;line-height:1;letter-spacing:-.05em}
+    .kpi small{display:block;margin-top:6px;font-size:9.5px;font-weight:700;color:var(--green)}
+    .kpi small.warn{color:var(--orange)}.kpi small.bad{color:var(--red)}.kpi small.neutral{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1.25fr .75fr;gap:14px;margin-bottom:14px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:17px 18px}
+    .card-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .card-head h2{margin:0;font-size:12px;font-weight:850;letter-spacing:.01em}
+    .card-head span{margin-left:auto;font-size:9px;font-weight:700;color:var(--muted)}
+    .bars{display:grid;gap:9px}
+    .bar-row{display:grid;grid-template-columns:150px 1fr 30px;align-items:center;gap:10px;font-size:10px;font-weight:650;color:#4a5570}
+    .track{height:7px;border-radius:5px;background:#eef2f9;overflow:hidden}
+    .track i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#6ea8ff,var(--blue))}
+    .bar-row:nth-child(2) .track i{background:linear-gradient(90deg,#8d7bff,#7c5cff)}
+    .bar-row:nth-child(3) .track i{background:linear-gradient(90deg,#5ad1b0,var(--green))}
+    .bar-row:nth-child(4) .track i{background:linear-gradient(90deg,#ffc45c,var(--orange))}
+    .bar-row:nth-child(5) .track i{background:linear-gradient(90deg,#ff8b8f,var(--red))}
+    .val{text-align:right;font-variant-numeric:tabular-nums;color:var(--text);font-weight:800}
+    .donut-wrap{display:flex;align-items:center;gap:22px;padding:4px 0 2px}
+    .donut{width:134px;height:134px;border-radius:50%;background:conic-gradient(var(--red) 0 17%,var(--orange) 17% 46%,var(--blue) 46% 78%,var(--green) 78% 100%);display:grid;place-items:center;flex:0 0 auto}
+    .donut::after{content:"24";width:86px;height:86px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-family:"Unbounded Variable",sans-serif;font-size:23px;font-weight:650;letter-spacing:-.05em}
+    .legend{display:grid;gap:9px;font-size:10px;color:var(--muted);width:100%}
+    .legend div{display:flex;align-items:center;gap:8px}
+    .legend i{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+    .legend b{margin-left:auto;color:var(--text);font-size:10px}
+    .table-card{padding:0;overflow:hidden}
+    .table-card .card-head{padding:16px 18px 0;margin-bottom:10px}
+    table{width:100%;border-collapse:collapse;font-size:10.5px}
+    th{text-align:left;padding:9px 18px;background:#f7f9fd;color:var(--muted);font-size:8.5px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    td{padding:10px 18px;border-bottom:1px solid #eef2f8;vertical-align:middle}
+    tr:last-child td{border-bottom:0}
+    .sev{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:999px;font-size:8px;font-weight:850;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+    .sev.crit{background:var(--red-soft);color:var(--red)}.sev.high{background:var(--orange-soft);color:#a16207}.sev.mid{background:var(--blue-soft);color:var(--blue)}
+    td b{font-weight:750;color:var(--text)}
+    td span{display:block;color:var(--muted);font-size:9.5px;margin-top:2px}
+    .rec{color:var(--muted);font-size:9.5px;line-height:1.45}
+    .back{position:fixed;right:16px;bottom:14px;z-index:100;background:var(--navy);color:#fff;border-radius:999px;padding:8px 13px;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.88}
+    .back:hover{opacity:1;background:var(--blue)}
+    @media(max-width:1000px){body{overflow:auto}.sidebar{display:none}main{padding:16px}.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.head{flex-wrap:wrap}.head-actions{width:100%;margin-left:0}.back{display:none}}
+  </style>
+</head>
+<body>
+  <aside class="sidebar" aria-label="Навигация дашборда">
+    <div class="brand"><div class="brand-mark">ГУ</div><div><b>ЛК ГУАП</b><span>UX research</span></div></div>
+    <p class="nav-label">Проект</p>
+    <a class="nav-item active" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg> Обзор</a>
+    <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg> Сценарии <span class="badge">8</span></a>
+    <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg> Проблемы <span class="badge">24</span></a>
+    <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m9 11 2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg> Рекомендации</a>
+    <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg> Отчёт</a>
+    <p class="nav-label">Данные</p>
+    <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg> Метрики</a>
+    <a class="nav-item" href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M2 21a7 7 0 0 1 14 0M16 5a3 3 0 0 1 0 6M22 21a6 6 0 0 0-4-5.7"/></svg> Респонденты</a>
+    <div class="sidebar-footer"><div class="avatar">ПФ</div><div><b>Павел Филатов</b><span>Исследователь</span></div></div>
+  </aside>
+
+  <main>
+    <div class="crumbs">Проекты <span>/</span> ЛК ГУАП <span>/</span> <b>UX-аудит</b></div>
+    <header class="head">
+      <div>
+        <h1>UX-аудит личного кабинета <span class="status">завершён</span></h1>
+        <p class="sub">Эвристическая оценка · 12 экспертов · 8 сценариев · ноябрь 2025</p>
+      </div>
+      <div class="head-actions"><button class="btn" type="button">Экспорт</button><button class="btn primary" type="button">Скачать PDF ↗</button></div>
+    </header>
+
+    <section class="kpis" aria-label="Ключевые метрики">
+      <div class="kpi"><label>SUS-оценка</label><strong>68</strong><small class="warn">чуть ниже нормы 70</small></div>
+      <div class="kpi"><label>Найдено проблем</label><strong>24</strong><small class="bad">6 критичных</small></div>
+      <div class="kpi"><label>Проверено сценариев</label><strong>8</strong><small class="neutral">из 8 запланированных</small></div>
+      <div class="kpi"><label>Среднее время</label><strong>4:12</strong><small class="warn">цель — до 3:00</small></div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="card-head"><h2>Оценка по эвристикам</h2><span>0–100, выше — лучше</span></div>
+        <div class="bars">
+          <div class="bar-row"><span>Видимость статуса</span><div class="track"><i style="width:82%"></i></div><span class="val">82</span></div>
+          <div class="bar-row"><span>Соответствие системе</span><div class="track"><i style="width:76%"></i></div><span class="val">76</span></div>
+          <div class="bar-row"><span>Свобода действий</span><div class="track"><i style="width:64%"></i></div><span class="val">64</span></div>
+          <div class="bar-row"><span>Предотвращение ошибок</span><div class="track"><i style="width:58%"></i></div><span class="val">58</span></div>
+          <div class="bar-row"><span>Помощь и документация</span><div class="track"><i style="width:47%"></i></div><span class="val">47</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Распределение проблем</h2><span>24 всего</span></div>
+        <div class="donut-wrap">
+          <div class="donut" aria-hidden="true"></div>
+          <div class="legend">
+            <div><i style="background:var(--red)"></i> Критичные <b>6</b></div>
+            <div><i style="background:var(--orange)"></i> Высокие <b>7</b></div>
+            <div><i style="background:var(--blue)"></i> Средние <b>8</b></div>
+            <div><i style="background:var(--green)"></i> Низкие <b>3</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card table-card">
+      <div class="card-head"><h2>Ключевые проблемы и рекомендации</h2><span>4 из 24</span></div>
+      <table>
+        <thead><tr><th>Приоритет</th><th>Проблема</th><th>Сценарий</th><th>Рекомендация</th></tr></thead>
+        <tbody>
+          <tr><td><span class="sev crit">критично</span></td><td><b>Статус заявки не виден</b><span>Нет статуса и истории изменений</span></td><td>Подача заявки</td><td class="rec">Добавить статусную модель и таймлайн</td></tr>
+          <tr><td><span class="sev high">высоко</span></td><td><b>Ошибки формы без подсказок</b><span>Поле подсвечивается без текста</span></td><td>Регистрация</td><td class="rec">Показывать причину и способ исправления</td></tr>
+          <tr><td><span class="sev high">высоко</span></td><td><b>Скрытая навигация</b><span>Разделы доступны только из профиля</span></td><td>Поиск раздела</td><td class="rec">Вынести ключевые разделы в основное меню</td></tr>
+          <tr><td><span class="sev mid">средне</span></td><td><b>Мелкий текст в таблицах</b><span>12 px, низкий контраст</span></td><td>Просмотр оценок</td><td class="rec">Увеличить кегль и контраст до WCAG AA</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
